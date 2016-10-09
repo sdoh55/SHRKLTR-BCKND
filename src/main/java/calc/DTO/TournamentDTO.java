@@ -1,0 +1,67 @@
+package calc.DTO;
+
+import calc.entity.Player;
+import calc.entity.Sport;
+
+import javax.persistence.*;
+
+/**
+ * Created by clementperez on 10/2/16.
+ */
+public class TournamentDTO {
+
+    private Long tournamentId;
+    private String name;
+    private String displayName;
+    private Boolean isOver;
+    private SportDTO sport;
+    private PlayerDTO owner;
+
+    public PlayerDTO getOwner() {
+        return owner;
+    }
+
+    public void setOwner(PlayerDTO owner) {
+        this.owner = owner;
+    }
+
+    public Long getTournamentId() {
+        return tournamentId;
+    }
+
+    public void setTournamentId(Long tournamentId) {
+        this.tournamentId = tournamentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public Boolean getIsOver() {
+        return isOver;
+    }
+
+    public void setIsOver(Boolean isOver) {
+        this.isOver = isOver;
+    }
+
+    public SportDTO getSport() {
+        return sport;
+    }
+
+    public void setSport(SportDTO sport) {
+        this.sport = sport;
+    }
+}
