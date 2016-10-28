@@ -42,25 +42,25 @@ public class MatchService {
             throw new AssertionError();
         }
 
-        // this method init both players even when there is a tie
-        Player winner = outcomes.get(0).getResults().equals(Outcome.Result.WIN) ? outcomes.get(0).getPlayer() : outcomes.get(1).getPlayer();
-        Player looser = outcomes.get(0).getResults().equals(Outcome.Result.WIN) ? outcomes.get(1).getPlayer() : outcomes.get(0).getPlayer();
+        // this method init both users even when there is a tie
+        User winner = outcomes.get(0).getResults().equals(Outcome.Result.WIN) ? outcomes.get(0).getUser() : outcomes.get(1).getUser();
+        User looser = outcomes.get(0).getResults().equals(Outcome.Result.WIN) ? outcomes.get(1).getUser() : outcomes.get(0).getUser();
         Boolean isTie = outcomes.get(0).getResults().equals(Outcome.Result.TIE);
 
         return addMatch(tournament,winner,looser, isTie);
     }
 
-    public Match addMatch(Tournament tournament, Player winner, Player looser, boolean isTie) {
+    public Match addMatch(Tournament tournament, User winner, User looser, boolean isTie) {
 
-        Stats winnerStats = statsService.findByPlayerAndTournamentCreateIfNone(winner,tournament);
-        Stats loserStats = statsService.findByPlayerAndTournamentCreateIfNone(looser,tournament);
+        Stats winnerStats = statsService.findByUserAndTournamentCreateIfNone(winner,tournament);
+        Stats loserStats = statsService.findByUserAndTournamentCreateIfNone(looser,tournament);
 
         double pointValue = EloRating.calculatePointValue(winnerStats.getScore(),loserStats.getScore(),isTie ? "=" : "+");
 
         return addMatch(tournament,winner,looser, pointValue, isTie);
     }
 
-    protected Match addMatch(Tournament tournament, Player winner, Player looser, double pointValue, boolean isTie) {
+    protected Match addMatch(Tournament tournament, User winner, User looser, double pointValue, boolean isTie) {
 
         Match match = new Match(tournament);
         List<Outcome> outcomes = new ArrayList<>(Arrays.asList(
@@ -86,13 +86,13 @@ public class MatchService {
     }
 
 
-    public List<Match> findByPlayerByTournament(Long playerId, String tournamentName){
-        return matchRepository.findByPlayerIdByTournamentName(playerId, tournamentName);
+    public List<Match> findByUserByTournament(Long userId, String tournamentName){
+        return matchRepository.findByUserIdByTournamentName(userId, tournamentName);
     }
 
 
-    public List<Match> findByPlayer(Long playerId) {
-        return matchRepository.findByPlayerId(playerId);
+    public List<Match> findByUser(Long userId) {
+        return matchRepository.findByUserId(userId);
     }
 
     public Iterable<Match> findAll() {

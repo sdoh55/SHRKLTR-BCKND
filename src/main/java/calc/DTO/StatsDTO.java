@@ -1,6 +1,6 @@
 package calc.DTO;
 
-import calc.entity.Player;
+import calc.entity.User;
 import calc.entity.Tournament;
 
 import javax.persistence.*;

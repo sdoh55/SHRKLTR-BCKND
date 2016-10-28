@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 
 @NamedQueries({
-        @NamedQuery(name = "Outcome.findByPlayerId", query = "SELECT o FROM Outcome o WHERE o.player.playerId = ?1"),
+        @NamedQuery(name = "Outcome.findByUserId", query = "SELECT o FROM Outcome o WHERE o.user.userId = ?1"),
         @NamedQuery(name = "Outcome.findByMatchId", query = "SELECT o FROM Outcome o WHERE o.match.matchId = ?1")
 })
 public class Outcome {
@@ -23,16 +23,16 @@ public class Outcome {
     @JoinColumn(name = "matchId")
     private Match match;
     @ManyToOne
-    @JoinColumn(name = "playerId")
-    private Player player;
+    @JoinColumn(name = "userId")
+    private User user;
 
     protected Outcome() {}
 
-    public Outcome(double scoreValue, Result results, Match match, Player player) {
+    public Outcome(double scoreValue, Result results, Match match, User user) {
         this.scoreValue = scoreValue;
         this.result = results;
         this.match = match;
-        this.player = player;
+        this.user = user;
     }
 
     public Long getOutcomeId() {
@@ -67,12 +67,12 @@ public class Outcome {
         this.match = match;
     }
 
-    public Player getPlayer() {
-        return player;
+    public User getUser() {
+        return user;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public enum Result {

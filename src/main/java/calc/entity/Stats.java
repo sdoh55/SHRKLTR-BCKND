@@ -7,8 +7,8 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Stats.findByPlayerId", query = "SELECT s FROM Stats s WHERE s.player.playerId = ?1"),
-        @NamedQuery(name = "Stats.findByPlayerAndTournament", query = "SELECT s FROM Stats s WHERE s.player.playerId = ?1 AND s.tournament.name = ?2")
+        @NamedQuery(name = "Stats.findByUserId", query = "SELECT s FROM Stats s WHERE s.user.userId = ?1"),
+        @NamedQuery(name = "Stats.findByUserAndTournament", query = "SELECT s FROM Stats s WHERE s.user.userId = ?1 AND s.tournament.name = ?2")
 })
 public class Stats {
     @Id
@@ -32,13 +32,13 @@ public class Stats {
     @JoinColumn(name="tournamentId")
     private Tournament tournament;
     @ManyToOne
-    @JoinColumn(name="playerId")
-    private Player player;
+    @JoinColumn(name="userId")
+    private User user;
 
     protected Stats() {}
 
-    public Stats(Player player, Tournament tournament) {
-        this.player = player;
+    public Stats(User user, Tournament tournament) {
+        this.user = user;
         this.tournament = tournament;
         this.score = 1000;
         this.worstScore = this.score;
@@ -187,11 +187,11 @@ public class Stats {
         this.tournament = tournament;
     }
 
-    public Player getPlayer() {
-        return player;
+    public User getUser() {
+        return user;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

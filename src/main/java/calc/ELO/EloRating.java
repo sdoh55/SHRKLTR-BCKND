@@ -2,8 +2,8 @@
  * ELO Rating calculator
  *
  * Implements two methods 
- * 1. calculateMultiplayer - calculate rating for multiple players
- * 2. calculate2PlayersRating - for 2 player games
+ * 1. calculateMultiuser - calculate rating for multiple users
+ * 2. calculate2UsersRating - for 2 user games
  *
  * @author radone@gmail.com
  */
@@ -20,13 +20,13 @@ public class EloRating {
     }
 
     /**
-     * Calculate ELO rating for multiplayer
+     * Calculate ELO rating for multiuser
      *
-     * Formula used to calculate rating for Player1 
+     * Formula used to calculate rating for User1
      * NewRatingP1 = RatingP1 + K * (S - EP1)
      *
      * Where: 
-     * RatingP1 = current rating for Player1 
+     * RatingP1 = current rating for User1
      * K = K-factor 
      * S = actualScore (1 win, 0 lose) 
      * EP1 = Q1 / Q1 + Q2 + Q3 
@@ -38,7 +38,7 @@ public class EloRating {
      *            The userId of the winner
      * @return A HashMap<UserId, Rating> with new rating
      */
-    static public HashMap<Integer, Double> calculateMultiplayer(HashMap<Integer, Double> usersRating, int userIdWinner) {
+    static public HashMap<Integer, Double> calculateMultiuser(HashMap<Integer, Double> usersRating, int userIdWinner) {
 
         if (usersRating.size() == 0) {
             return usersRating;
@@ -67,9 +67,9 @@ public class EloRating {
 
             /**
              * Actual score is
-             * 1 - if player is winner
-             * 0 - if player losses
-             * (another option is to give fractions of 1/number-of-players instead of 0)
+             * 1 - if user is winner
+             * 0 - if user losses
+             * (another option is to give fractions of 1/number-of-users instead of 0)
              */
             int actualScore;
             if (userIdWinner == userId) {
@@ -90,20 +90,20 @@ public class EloRating {
     }
 
     /**
-     * Calculate rating for 2 players
+     * Calculate rating for 2 users
      *
-     * @param player1Rating
-     *            The rating of Player1
-     * @param player2Rating
-     *            The rating of Player2
+     * @param user1Rating
+     *            The rating of User1
+     * @param user2Rating
+     *            The rating of User2
      * @param outcome
-     *            A string representing the game result for Player1 
+     *            A string representing the game result for User1
      *            "+" winner
      *            "=" draw 
      *            "-" lose
-     * @return New player rating
+     * @return New user rating
      */
-    static public double calculate2PlayersRating(double player1Rating, double player2Rating, String outcome) {
+    static public double calculate2UsersRating(double user1Rating, double user2Rating, String outcome) {
 
         double actualScore;
 
@@ -118,36 +118,36 @@ public class EloRating {
             actualScore = 0.5;
             // invalid outcome
         } else {
-            return player1Rating;
+            return user1Rating;
         }
 
         // calculate expected outcome
-        double exponent = (double) (player2Rating - player1Rating) / 400;
+        double exponent = (double) (user2Rating - user1Rating) / 400;
         double expectedOutcome = (1 / (1 + (Math.pow(10, exponent))));
 
         // K-factor
         int K = 32;
 
         // calculate new rating
-        double newRating = player1Rating + K * (actualScore - expectedOutcome);
+        double newRating = user1Rating + K * (actualScore - expectedOutcome);
 
         return newRating;
     }
     /**
-     * Calculate rating for 2 players
+     * Calculate rating for 2 users
      *
-     * @param player1Rating
-     *            The rating of Player1
-     * @param player2Rating
-     *            The rating of Player2
+     * @param user1Rating
+     *            The rating of User1
+     * @param user2Rating
+     *            The rating of User2
      * @param outcome
-     *            A string representing the game result for Player1
+     *            A string representing the game result for User1
      *            "+" winner
      *            "=" draw
      *            "-" lose
-     * @return New player rating
+     * @return New user rating
      */
-    static public double calculatePointValue(double player1Rating, double player2Rating, String outcome) {
+    static public double calculatePointValue(double user1Rating, double user2Rating, String outcome) {
 
         double actualScore;
 
@@ -162,11 +162,11 @@ public class EloRating {
             actualScore = 0.5;
             // invalid outcome
         } else {
-            return player1Rating;
+            return user1Rating;
         }
 
         // calculate expected outcome
-        double exponent = (double) (player2Rating - player1Rating) / 400;
+        double exponent = (double) (user2Rating - user1Rating) / 400;
         double expectedOutcome = (1 / (1 + (Math.pow(10, exponent))));
 
         // K-factor
@@ -179,7 +179,7 @@ public class EloRating {
      * Determine the rating constant K-factor based on current rating
      *
      * @param rating
-     *            Player rating
+     *            User rating
      * @return K-factor
      */
     static public int determineK(int rating) {

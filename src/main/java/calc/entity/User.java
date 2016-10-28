@@ -1,7 +1,7 @@
 // tag::sample[]
 package calc.entity;
 
-import calc.DTO.PlayerDTO;
+import calc.DTO.UserDTO;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,26 +10,30 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@NamedQuery(name = "Player.findByUserName", query = "SELECT p FROM Player p WHERE p.userName = ?1")
-public class Player {
+@NamedQuery(name = "User.findByUserName", query = "SELECT p FROM User p WHERE p.userName = ?1")
+public class User {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long playerId;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String userName;
+
+    private String password;
+
+
     private String email;
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Stats> stats;
 
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Outcome> outcomes;
 
-    protected Player() {}
+    protected User() {}
 
-    public Player(String userName) {
+    public User(String userName) {
         this.userName = userName;
         this.stats = new ArrayList<Stats>();
     }
@@ -37,20 +41,20 @@ public class Player {
     @Override
     public String toString() {
         return String.format(
-                "Player[id=%d, firstName='%s', lastName='%s']",
-                playerId, firstName, lastName);
+                "User[id=%d, firstName='%s', lastName='%s']",
+                userId, firstName, lastName);
     }
 
-    public Long getPlayerId() {
-        return playerId;
+    public Long getUserId() {
+        return userId;
     }
 
     public String getFirstName() { return firstName; }
 
     public String getLastName() { return lastName; }
 
-    public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setFirstName(String firstName) {
@@ -68,6 +72,14 @@ public class Player {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public String getPassword() { return password; }
+
+    public void setPassword(String password) { this.password = password; }
+
+    public String getEmail() { return email; }
+
+    public void setEmail(String email) { this.email = email;}
 
     public List<Stats> getStats() {
         return stats;

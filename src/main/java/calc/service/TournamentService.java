@@ -3,7 +3,7 @@ package calc.service;
 import calc.DTO.MatchDTO;
 import calc.DTO.TournamentDTO;
 import calc.entity.Match;
-import calc.entity.Player;
+import calc.entity.User;
 import calc.entity.Sport;
 import calc.entity.Tournament;
 import calc.repository.StatsRepository;
@@ -30,7 +30,7 @@ public class TournamentService {
     @Autowired
     private SportService sportService;
     @Autowired
-    private PlayerService playerService;
+    private UserService userService;
     @Autowired
     private MatchService matchService;
     @Autowired
@@ -66,7 +66,7 @@ public class TournamentService {
         tournament.setIsOver(tournamentDto.getIsOver());
         tournament.setSport(sportService.convertToEntity(tournamentDto.getSport()));
         tournament.setMatchs(matchService.findByTournamentName(tournamentDto.getName()));
-        tournament.setOwner(playerService.convertToEntity(tournamentDto.getOwner()));
+        tournament.setOwner(userService.convertToEntity(tournamentDto.getOwner()));
 
         return tournament;
     }
@@ -82,7 +82,7 @@ public class TournamentService {
 
         if (tournament.getTournamentId() != null) {
             tournamentDTO.setOwner(
-                    playerService.convertToDto(tournament.getOwner())
+                    userService.convertToDto(tournament.getOwner())
             );
         }
         return tournamentDTO;

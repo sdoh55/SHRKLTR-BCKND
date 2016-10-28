@@ -1,9 +1,9 @@
 package calc;
 
 import calc.entity.*;
-import calc.repository.PlayerRepository;
+import calc.repository.UserRepository;
 import calc.service.MatchService;
-import calc.service.PlayerService;
+import calc.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class Application {
     @Autowired
     private CrudRepository<Outcome,Long> repoOutcome;
     @Autowired
-    private PlayerService playerService;
+    private UserService userService;
     @Autowired
     private MatchService matchService;
 
@@ -75,42 +75,42 @@ public class Application {
         for(Sport sport : sports){
             repoSport.save(sport);
         }
-        List<Player> players = Arrays.asList(
-                new Player("AAAAA"),
-                new Player("BBBBB"),
-                new Player("CCCCC"),
-                new Player("DDDDD"),
-                new Player("EEEEE"),
-                new Player("FFFFF"),
-                new Player("GGGGG"),
-                new Player("HHHHH"));
+        List<User> users = Arrays.asList(
+                new User("AAAAA"),
+                new User("BBBBB"),
+                new User("CCCCC"),
+                new User("DDDDD"),
+                new User("EEEEE"),
+                new User("FFFFF"),
+                new User("GGGGG"),
+                new User("HHHHH"));
 
-        for(Player player : players){
-            playerService.save(player);
+        for(User user : users){
+            userService.save(user);
         }
 
         List<Tournament> tournaments = Arrays.asList(
-                new Tournament("Tournament1", sports.get(0), players.get(0)),
-                new Tournament("Tournament2", sports.get(0), players.get(1)),
-                new Tournament("Tournament3", sports.get(1), players.get(2)),
-                new Tournament("Tournament4", sports.get(1), players.get(3)),
-                new Tournament("Tournament5", sports.get(2), players.get(4)),
-                new Tournament("Tournament6", sports.get(3), players.get(1)),
-                new Tournament("Tournament7", sports.get(3), players.get(2)),
-                new Tournament("Tournament8", sports.get(2), players.get(3)));
+                new Tournament("Tournament1", sports.get(0), users.get(0)),
+                new Tournament("Tournament2", sports.get(0), users.get(1)),
+                new Tournament("Tournament3", sports.get(1), users.get(2)),
+                new Tournament("Tournament4", sports.get(1), users.get(3)),
+                new Tournament("Tournament5", sports.get(2), users.get(4)),
+                new Tournament("Tournament6", sports.get(3), users.get(1)),
+                new Tournament("Tournament7", sports.get(3), users.get(2)),
+                new Tournament("Tournament8", sports.get(2), users.get(3)));
 
         for(Tournament tournament : tournaments){
             repoTournament.save(tournament);
 
-            for(Player player : players){
-                List<Player> opponents = new ArrayList<Player>(players);;
-                opponents.remove(player);
+            for(User user : users){
+                List<User> opponents = new ArrayList<User>(users);;
+                opponents.remove(user);
                 for(int i = 0;i<2;i++){
                     Random rdm = new Random();
-                    Player opponent = opponents.get(rdm.nextInt(opponents.size() - 1));
+                    User opponent = opponents.get(rdm.nextInt(opponents.size() - 1));
 
                     int result = rdm.nextInt(1);
-                    matchService.addMatch(tournament, result == 0 ? player : opponent, result != 0 ? player : opponent, false);
+                    matchService.addMatch(tournament, result == 0 ? user : opponent, result != 0 ? user : opponent, false);
                 }
             }
         }
