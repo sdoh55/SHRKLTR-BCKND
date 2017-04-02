@@ -61,7 +61,7 @@ public class Application {
                 .build();
     }
 
-  // @PostConstruct
+    @PostConstruct
     public void initDB(){
 
        List<Sport> sports = Arrays.asList(
@@ -112,5 +112,6 @@ public class Application {
                 }
             }
         }
+
     }
 }

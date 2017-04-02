@@ -14,9 +14,9 @@ public class Sport {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long sportId;
     private String name;
-
+/*
     @OneToOne(mappedBy = "sport", cascade = CascadeType.ALL)
-    private Tournament mainTourmanent;
+    private Tournament mainTourmanent;*/
 
     @OneToMany(mappedBy = "sport", cascade = CascadeType.ALL)
     private List<Tournament> tournaments;
@@ -49,12 +49,12 @@ public class Sport {
     public void setTournaments(List<Tournament> tournaments) {
         this.tournaments = tournaments;
     }
-
+/*
     public Tournament getMainTourmanent() {
         return mainTourmanent;
     }
 
     public void setMainTourmanent(Tournament mainTourmanent) {
         this.mainTourmanent = mainTourmanent;
-    }
+    }*/
 }

@@ -1,6 +1,5 @@
 package calc.service;
 
-import calc.Application;
 import calc.DTO.UserDTO;
 import calc.DTO.StatsDTO;
 import calc.entity.Outcome;
@@ -31,8 +30,6 @@ import java.util.Set;
  */
 @Service
 public class StatsService {
-
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired
     private StatsRepository statsRepository;
