@@ -1,5 +1,3 @@
-package calc;
-
 import calc.entity.*;
 import calc.repository.UserRepository;
 import calc.service.MatchService;
@@ -63,7 +61,7 @@ public class Application {
                 .build();
     }
 
-    @PostConstruct
+  // @PostConstruct
     public void initDB(){
 
        List<Sport> sports = Arrays.asList(

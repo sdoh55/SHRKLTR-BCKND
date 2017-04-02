@@ -15,6 +15,9 @@ public class Sport {
     private Long sportId;
     private String name;
 
+    @OneToOne(mappedBy = "sport", cascade = CascadeType.ALL)
+    private Tournament mainTourmanent;
+
     @OneToMany(mappedBy = "sport", cascade = CascadeType.ALL)
     private List<Tournament> tournaments;
 
@@ -47,4 +50,11 @@ public class Sport {
         this.tournaments = tournaments;
     }
 
+    public Tournament getMainTourmanent() {
+        return mainTourmanent;
+    }
+
+    public void setMainTourmanent(Tournament mainTourmanent) {
+        this.mainTourmanent = mainTourmanent;
+    }
 }

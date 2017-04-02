@@ -12,7 +12,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.gradle" />
       <excludeFolder url="file://$MODULE_DIR$/build" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Gradle: spring-boot-starter-web-1.4.0.RELEASE" level="project" />
     <orderEntry type="library" name="Gradle: spring-boot-starter-data-jpa-1.4.0.RELEASE" level="project" />

@@ -39,7 +39,6 @@ public class Tournament {
     protected Tournament() {}
 
     public Tournament(String displayName, Sport sport, User owner) {
-        displayName = displayName;
         name = displayName.replaceAll("\\s+","").toLowerCase();
         this.displayName = displayName;
         this.sport = sport;
