@@ -1,12 +1,8 @@
-package calc;
-
 import calc.entity.*;
 import calc.repository.PlayerRepository;
 import calc.service.MatchService;
 import calc.service.PlayerService;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -26,15 +23,13 @@ import javax.annotation.PostConstruct;
 import java.util.*;
 
 @SpringBootApplication
-@ComponentScan(basePackages={"calc.controller","calc.repository","calc.entity","calc.rest","calc.service"})
+@ComponentScan(basePackages={"calc.controller","calc.repository","calc.entity","calc.rest","calc.service","calc.social"})
 @EnableJpaRepositories(basePackages = { "calc.repository" })
 @EnableSwagger2
 @EntityScan(basePackages = { "calc.entity" })
 public class Application {
 
     public static void main(String[] args) { SpringApplication.run(Application.class, args);}
-
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Autowired
     private CrudRepository<Sport,Long> repoSport;

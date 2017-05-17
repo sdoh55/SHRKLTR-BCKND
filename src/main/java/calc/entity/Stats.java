@@ -1,6 +1,7 @@
 package calc.entity;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by clementperez on 9/13/16.
@@ -26,8 +27,12 @@ public class Stats {
     private double worstScore;
     private int longuestWinStreak;
     private int longuestLoseStreak;
-
     private int longuestTieStreak;
+    private Date bestScoreDate;
+    private Date worstScoreDate;
+    private Date longuestWinStreakDate;
+    private Date longuestLoseStreakDate;
+    private Date longuestTieStreakDate;
     @ManyToOne
     @JoinColumn(name="tournamentId")
     private Tournament tournament;
@@ -149,13 +154,18 @@ public class Stats {
         return bestScore;
     }
 
-    public void setBestScore(double bestScore) { this.bestScore = bestScore;}
+    public void setBestScore(double bestScore) {
+        if(bestScore >= this.bestScore)
+            this.bestScoreDate = new Date();
+        this.bestScore = bestScore;}
 
     public double getWorstScore() {
         return worstScore;
     }
 
     public void setWorstScore(double worstScore) {
+        if(worstScore >= this.worstScore)
+            this.worstScoreDate = new Date();
         this.worstScore = worstScore;
     }
 
@@ -164,6 +174,8 @@ public class Stats {
     }
 
     public void setLonguestWinStreak(int longuestWinStreak) {
+        if(longuestWinStreak >= this.longuestWinStreak)
+            this.longuestWinStreakDate = new Date();
         this.longuestWinStreak = longuestWinStreak;
     }
 
@@ -172,12 +184,19 @@ public class Stats {
     }
 
     public void setLonguestLoseStreak(int longuestLoseStreak) {
+        if(longuestLoseStreak >= this.longuestLoseStreak)
+            this.longuestLoseStreakDate = new Date();
         this.longuestLoseStreak = longuestLoseStreak;
     }
 
     public int getLonguestTieStreak() {return longuestTieStreak;}
 
-    public void setLonguestTieStreak(int longuestTieStreak) {this.longuestTieStreak = longuestTieStreak; }
+    public void setLonguestTieStreak(int longuestTieStreak) {
+        if(longuestTieStreak >= this.longuestTieStreak)
+            this.longuestTieStreakDate = new Date();
+        this.longuestTieStreak = longuestTieStreak;
+
+    }
 
     public Tournament getTournament() {
         return tournament;
@@ -193,5 +212,45 @@ public class Stats {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public Date getBestScoreDate() {
+        return bestScoreDate;
+    }
+
+    public void setBestScoreDate(Date bestScoreDate) {
+        this.bestScoreDate = bestScoreDate;
+    }
+
+    public Date getWorstScoreDate() {
+        return worstScoreDate;
+    }
+
+    public void setWorstScoreDate(Date worstScoreDate) {
+        this.worstScoreDate = worstScoreDate;
+    }
+
+    public Date getLonguestWinStreakDate() {
+        return longuestWinStreakDate;
+    }
+
+    public void setLonguestWinStreakDate(Date longuestWinStreakDate) {
+        this.longuestWinStreakDate = longuestWinStreakDate;
+    }
+
+    public Date getLonguestLoseStreakDate() {
+        return longuestLoseStreakDate;
+    }
+
+    public void setLonguestLoseStreakDate(Date longuestLoseStreakDate) {
+        this.longuestLoseStreakDate = longuestLoseStreakDate;
+    }
+
+    public Date getLonguestTieStreakDate() {
+        return longuestTieStreakDate;
+    }
+
+    public void setLonguestTieStreakDate(Date longuestTieStreakDate) {
+        this.longuestTieStreakDate = longuestTieStreakDate;
     }
 }
