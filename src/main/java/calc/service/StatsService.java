@@ -1,13 +1,13 @@
 package calc.service;
 
 import calc.Application;
-import calc.DTO.PlayerDTO;
+import calc.DTO.UserDTO;
 import calc.DTO.StatsDTO;
 import calc.entity.Outcome;
-import calc.entity.Player;
+import calc.entity.User;
 import calc.entity.Stats;
 import calc.entity.Tournament;
-import calc.repository.PlayerRepository;
+import calc.repository.UserRepository;
 import calc.repository.StatsRepository;
 import calc.repository.TournamentRepository;
 import org.modelmapper.ModelMapper;
@@ -15,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,14 +29,12 @@ import java.util.Set;
 @Service
 public class StatsService {
 
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
-
     @Autowired
     private StatsRepository statsRepository;
     @Autowired
     private TournamentRepository tournamentRepository;
     @Autowired
-    private PlayerRepository playerRepository;
+    private UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -47,25 +42,25 @@ public class StatsService {
         return statsRepository.findByTournament(tournament);
     }
 
-    public List<Stats> findByPlayer(Player player){
-        return statsRepository.findByPlayer(player);
+    public List<Stats> findByUser(User user){
+        return statsRepository.findByUser(user);
     }
 
-    public Stats findByPlayerAndTournament(Long playerId, String tournamentName){
-        return statsRepository.findByPlayerAndTournament(playerId, tournamentName);
+    public Stats findByUserAndTournament(Long userId, String tournamentName){
+        return statsRepository.findByUserAndTournament(userId, tournamentName);
     }
 
-    public Stats findByPlayerAndTournamentCreateIfNone(Player player, Tournament tournament){
+    public Stats findByUserAndTournamentCreateIfNone(User user, Tournament tournament){
 
-        for(Stats s : player.getStats()){
+        for(Stats s : user.getStats()){
             if(s.getTournament().equals(tournament))
                 return s;
         }
 
-        Stats stats = statsRepository.findByPlayerAndTournament(player.getPlayerId(), tournament.getName());
+        Stats stats = statsRepository.findByUserAndTournament(user.getUserId(), tournament.getName());
 
         if(stats == null) {
-            stats = new Stats(player, tournament);
+            stats = new Stats(user, tournament);
             statsRepository.save(stats);
         }
 
@@ -73,10 +68,10 @@ public class StatsService {
     }
 
     public void recalculateAfterOutcome(Outcome outcome){
-        Stats stats = statsRepository.findByPlayerAndTournament(outcome.getPlayer().getPlayerId(), outcome.getMatch().getTournament().getName());
+        Stats stats = statsRepository.findByUserAndTournament(outcome.getUser().getUserId(), outcome.getMatch().getTournament().getName());
 
         if(stats == null){
-            stats = new Stats(outcome.getPlayer(),outcome.getMatch().getTournament());
+            stats = new Stats(outcome.getUser(),outcome.getMatch().getTournament());
         }
 
         stats.setScore(stats.getScore() + outcome.getScoreValue());
@@ -117,7 +112,7 @@ public class StatsService {
         stats.setWorstScore(statsDto.getWorstScore());*/
         if(statsDto.getStatsId() != null) {
             stats.setTournament(statsRepository.findOne(statsDto.getStatsId()).getTournament());
-            stats.setPlayer(statsRepository.findOne(statsDto.getStatsId()).getPlayer());
+            stats.setUser(statsRepository.findOne(statsDto.getStatsId()).getUser());
         }
 
         return stats;

@@ -1,7 +1,7 @@
 package calc.controller;
 
 import calc.DTO.MatchDTO;
-import calc.DTO.PlayerDTO;
+import calc.DTO.UserDTO;
 import calc.DTO.StatsDTO;
 import calc.DTO.TournamentDTO;
 import calc.entity.*;
@@ -33,7 +33,7 @@ public class TournamentController {
     @Autowired
     private SportService sportService;
     @Autowired
-    private PlayerService playerService;
+    private UserService userService;
 
 
     @RequestMapping(value = "/tournaments", method = RequestMethod.GET)
@@ -62,7 +62,7 @@ public class TournamentController {
      */
     @RequestMapping(value = "/tournament", method = RequestMethod.POST)
     public void createTournament(TournamentDTO tournament) {
-        Player owner = playerService.whoIsLoggedIn();
+        User owner = userService.whoIsLoggedIn();
         try {
             tournamentRepository.save(tournamentService.convertToEntity(tournament));
         } catch (ParseException e) {
@@ -72,7 +72,7 @@ public class TournamentController {
 
     @RequestMapping(value = "/tournament/{tournamentName}", method = RequestMethod.PUT)
     public void updateTournament(@PathVariable(value="tournamentName") String name, TournamentDTO tournament) {
-        Player owner = playerService.whoIsLoggedIn();
+        User owner = userService.whoIsLoggedIn();
         try {
             tournamentRepository.save(tournamentService.convertToEntity(tournament));
         } catch (ParseException e) {
@@ -126,11 +126,11 @@ public class TournamentController {
                 .map(s -> statsService.convertToDto(s)).collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/tournament/{tournamentName}/players", method = RequestMethod.GET)
-    public List<PlayerDTO> playersForTournament(@PathVariable(value="tournamentName") String name) {
+    @RequestMapping(value = "/tournament/{tournamentName}/users", method = RequestMethod.GET)
+    public List<UserDTO> usersForTournament(@PathVariable(value="tournamentName") String name) {
         Tournament tournament =  tournamentRepository.findByName(name);
 
-        return playerService.findPlayersInTournament(tournament).stream()
-                .map(players -> playerService.convertToDto(players,tournament)).collect(Collectors.toList());
+        return userService.findUsersInTournament(tournament).stream()
+                .map(users -> userService.convertToDto(users,tournament)).collect(Collectors.toList());
     }
 }

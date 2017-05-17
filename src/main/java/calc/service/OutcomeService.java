@@ -27,12 +27,12 @@ public class OutcomeService {
     @Autowired
     private MatchService matchService;
     @Autowired
-    private PlayerService playerService;
+    private UserService userService;
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<Outcome> findByPlayerId(Long playerId) {
-        return outcomeRepository.findByPlayerId(playerId);
+    public List<Outcome> findByUserId(Long userId) {
+        return outcomeRepository.findByUserId(userId);
     }
 
     public List<Outcome> findByMatchId(Long matchId) {
@@ -48,7 +48,7 @@ public class OutcomeService {
         if(outcomeDto.getMatchId() != null) {
             outcome.setMatch(matchService.findOne(outcomeDto.getMatchId()));
         }
-        outcome.setPlayer(playerService.findByUserName(outcomeDto.getUserName()));
+        outcome.setUser(userService.findByUserName(outcomeDto.getUserName()));
 
         return outcome;
     }
@@ -60,7 +60,7 @@ public class OutcomeService {
         outcomeDTO.setScoreValue(outcome.getScoreValue());
         outcomeDTO.setResult(outcome.getResults());
         outcomeDTO.setMatchId(outcome.getMatch().getMatchId());
-        outcomeDTO.setUserName(outcome.getPlayer().getUserName());
+        outcomeDTO.setUserName(outcome.getUser().getUserName());
 
         return outcomeDTO;
     }

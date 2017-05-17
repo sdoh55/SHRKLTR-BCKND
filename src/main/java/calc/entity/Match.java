@@ -12,14 +12,14 @@ import java.util.*;
 
 @NamedQueries({
         @NamedQuery(name = "Match.findByTournamentName", query = "SELECT m FROM Match m WHERE m.tournament.name = ?1"),
-        @NamedQuery(name = "Match.findByPlayerId",
+        @NamedQuery(name = "Match.findByUserId",
                 query = "SELECT m FROM Match m " +
                         "INNER JOIN m.outcomes o " +
-                        "WHERE o.player.playerId = ?1"),
-        @NamedQuery(name = "Match.findByPlayerIdByTournamentName",
+                        "WHERE o.user.userId = ?1"),
+        @NamedQuery(name = "Match.findByUserIdByTournamentName",
                 query = "SELECT m FROM Match m " +
                         "INNER JOIN m.outcomes o " +
-                        "WHERE o.player.playerId = ?1 AND m.tournament.name=?2" )
+                        "WHERE o.user.userId = ?1 AND m.tournament.name=?2" )
 })
 public class Match {
 

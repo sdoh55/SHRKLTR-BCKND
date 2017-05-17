@@ -20,8 +20,8 @@ public class StatsController {
     private StatsRepository repository;
 
     @RequestMapping("/stats")
-    public Stats stats(@RequestParam(value="playerId") Long playerId,@RequestParam(value="tournamentName") String tournamentName) {
-        return repository.findByPlayerAndTournament(playerId, tournamentName);
+    public Stats stats(@RequestParam(value="userId") Long userId,@RequestParam(value="tournamentName") String tournamentName) {
+        return repository.findByUserAndTournament(userId, tournamentName);
     }
 }
 */

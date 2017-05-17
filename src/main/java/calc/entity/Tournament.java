@@ -27,8 +27,8 @@ public class Tournament {
     private Sport sport;
 
     @ManyToOne
-    @JoinColumn(name = "playerId")
-    private Player owner;
+    @JoinColumn(name = "userId")
+    private User owner;
 
     @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL)
     private List<Match> matchs;
@@ -38,7 +38,7 @@ public class Tournament {
 
     protected Tournament() {}
 
-    public Tournament(String displayName, Sport sport, Player owner) {
+    public Tournament(String displayName, Sport sport, User owner) {
         displayName = displayName;
         name = displayName.replaceAll("\\s+","").toLowerCase();
         this.displayName = displayName;
@@ -83,9 +83,9 @@ public class Tournament {
         this.sport = sport;
     }
 
-    public Player getOwner() { return owner; }
+    public User getOwner() { return owner; }
 
-    public void setOwner(Player owner) { this.owner = owner; }
+    public void setOwner(User owner) { this.owner = owner; }
 
     public List<Match> getMatchs() {
         return matchs;

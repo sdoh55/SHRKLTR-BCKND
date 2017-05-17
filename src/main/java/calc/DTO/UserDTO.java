@@ -7,9 +7,9 @@ import javax.persistence.Id;
 /**
  * Created by clementperez on 10/2/16.
  */
-public class PlayerDTO {
+public class UserDTO {
 
-    private Long playerId;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String userName;
@@ -23,12 +23,12 @@ public class PlayerDTO {
         this.stats = stats;
     }
 
-    public Long getPlayerId() {
-        return playerId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {

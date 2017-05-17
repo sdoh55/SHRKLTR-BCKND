@@ -2,7 +2,7 @@ package calc.DTO;
 
 import calc.entity.Match;
 import calc.entity.Outcome;
-import calc.entity.Player;
+import calc.entity.User;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;

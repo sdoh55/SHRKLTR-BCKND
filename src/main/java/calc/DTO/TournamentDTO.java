@@ -1,6 +1,6 @@
 package calc.DTO;
 
-import calc.entity.Player;
+import calc.entity.User;
 import calc.entity.Sport;
 
 import javax.persistence.*;
@@ -15,13 +15,13 @@ public class TournamentDTO {
     private String displayName;
     private Boolean isOver;
     private SportDTO sport;
-    private PlayerDTO owner;
+    private UserDTO owner;
 
-    public PlayerDTO getOwner() {
+    public UserDTO getOwner() {
         return owner;
     }
 
-    public void setOwner(PlayerDTO owner) {
+    public void setOwner(UserDTO owner) {
         this.owner = owner;
     }
 

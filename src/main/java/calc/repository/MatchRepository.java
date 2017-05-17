@@ -1,7 +1,7 @@
 package calc.repository;
 
 import calc.entity.Match;
-import calc.entity.Player;
+import calc.entity.User;
 import calc.entity.Stats;
 import calc.entity.Tournament;
 import org.springframework.data.repository.CrudRepository;
@@ -17,7 +17,7 @@ import java.util.Set;
 @Repository
 public interface MatchRepository extends CrudRepository<Match, Long> {
     List<Match> findByTournament(Tournament tournament);
-    public List<Match> findByPlayerIdByTournamentName(@Param("playerId") Long playerId, @Param("tournamentName") String tournamentId);
+    public List<Match> findByUserIdByTournamentName(@Param("userId") Long userId, @Param("tournamentName") String tournamentId);
     List<Match> findByTournamentName(String tournamentName);
-    List<Match> findByPlayerId(Long playerId);
+    List<Match> findByUserId(Long userId);
 }

@@ -1,29 +1,26 @@
+apply plugin: 'eclipse'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'spring-boot'
+apply plugin: 'java'
+apply plugin: 'idea'
+
 buildscript {
     repositories {
         mavenCentral()
     }
+
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
+sourceCompatibility=1.8
+targetCompatibility=1.8
 
-jar {
-    baseName = 'gs-rest-service'
-    version =  '0.1.0'
+war {
+    baseName = 'spring-social-quickstart'
 }
-
-repositories {
-    mavenCentral()
-    maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
@@ -32,7 +29,43 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('com.jayway.jsonpath:json-path')
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
-    compile("com.h2database:h2")
     compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.4'
+
+    compile "org.springframework:spring-webmvc:$springVersion"
+    compile "org.springframework:spring-jdbc:$springVersion"
+    compile "org.springframework.social:spring-social-config:$springSocialVersion"
+    compile "org.springframework.social:spring-social-core:$springSocialVersion"
+    compile "org.springframework.social:spring-social-web:$springSocialVersion"
+    compile "org.springframework.social:spring-social-facebook:$springSocialFacebookVersion"
+    compile "org.springframework.security:spring-security-crypto:$springSecurityVersion"
+
+    compile("org.thymeleaf:thymeleaf-spring4:$thymeleafVersion")
+    compile "com.h2database:h2:$h2Version"
+    providedCompile "javax.servlet:javax.servlet-api:$servletApiVersion"
+    compile "cglib:cglib-nodep:$cglibVersion"
+
+    compile "org.apache.httpcomponents:httpclient:$httpclientVersion"
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "org.slf4j:jcl-over-slf4j:$slf4jVersion"
+    compile "org.slf4j:slf4j-log4j12:$slf4jVersion"
+    compile "log4j:log4j:$log4jVersion"
+    compile "javax.inject:javax.inject:$javaxInjectVersion"
 }
 
+configurations.all {
+    exclude module: 'slf4j-log4j12'
+}
+
+repositories {
+    mavenLocal()
+    maven { url 'http://maven.springframework.org/release' }
+    maven { url 'http://maven.springframework.org/milestone' }
+    maven { url 'http://maven.springframework.org/snapshot' }
+    maven { url 'http://download.java.net/maven/2' }
+    maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+    mavenCentral()
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
