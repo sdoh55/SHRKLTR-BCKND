@@ -1,6 +1,6 @@
 import calc.entity.*;
 import calc.repository.UserRepository;
-import calc.service.MatchService;
+import calc.service.GameService;
 import calc.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -39,13 +39,13 @@ public class Application {
     @Autowired
     private CrudRepository<Tournament,Long> repoTournament;
     @Autowired
-    private CrudRepository<Match,Long> repoMatch;
+    private CrudRepository<Game,Long> repoMatch;
     @Autowired
     private CrudRepository<Outcome,Long> repoOutcome;
     @Autowired
     private UserService userService;
     @Autowired
-    private MatchService matchService;
+    private GameService matchService;
 
     @Bean
     public ModelMapper modelMapper() {
@@ -61,7 +61,7 @@ public class Application {
                 .build();
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void initDB(){
 
        List<Sport> sports = Arrays.asList(
@@ -108,7 +108,7 @@ public class Application {
                     User opponent = opponents.get(rdm.nextInt(opponents.size() - 1));
 
                     int result = rdm.nextInt(1);
-                    matchService.addMatch(tournament, result == 0 ? user : opponent, result != 0 ? user : opponent, false);
+                    matchService.addGame(tournament, result == 0 ? user : opponent, result != 0 ? user : opponent, false);
                 }
             }
         }

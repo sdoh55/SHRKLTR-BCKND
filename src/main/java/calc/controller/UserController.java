@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import calc.DTO.MatchDTO;
+import calc.DTO.GameDTO;
 import calc.DTO.UserDTO;
 import calc.DTO.StatsDTO;
-import calc.entity.Match;
+import calc.entity.Game;
 import calc.entity.User;
 import calc.entity.Stats;
-import calc.service.MatchService;
+import calc.service.GameService;
 import calc.service.UserService;
 import calc.service.StatsService;
 import calc.service.TournamentService;
@@ -29,7 +29,7 @@ public class UserController {
     @Autowired
     private StatsService statsService;
     @Autowired
-    private MatchService matchService;
+    private GameService matchService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<UserDTO> users() {
@@ -85,8 +85,8 @@ public class UserController {
     }*/
 
     @RequestMapping(value = "/user/{userId}/matchs", method = RequestMethod.GET)
-    public List<MatchDTO> userMatchsForTournament(@PathVariable(value="userId") Long userId, @RequestParam(value="tournamentName", required = false) String tournamentName) {
-        List<Match> m = new ArrayList<>();
+    public List<GameDTO> userMatchsForTournament(@PathVariable(value="userId") Long userId, @RequestParam(value="tournamentName", required = false) String tournamentName) {
+        List<Game> m = new ArrayList<>();
         if(tournamentName != null){
             m = matchService.findByUserByTournament(userId,tournamentName);
         }else
