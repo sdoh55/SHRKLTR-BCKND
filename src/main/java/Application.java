@@ -2,6 +2,8 @@ import calc.entity.*;
 import calc.repository.UserRepository;
 import calc.service.GameService;
 import calc.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.orm.jpa.EntityScan;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -22,6 +24,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages={"calc.controller","calc.repository","calc.entity","calc.rest","calc.service"})
@@ -37,6 +40,8 @@ public class Application {
     @Autowired
     private CrudRepository<Sport,Long> repoSport;
     @Autowired
+    private UserRepository userRepository;
+    @Autowired
     private CrudRepository<Tournament,Long> repoTournament;
     @Autowired
     private CrudRepository<Game,Long> repoMatch;
@@ -51,6 +56,11 @@ public class Application {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+    
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper().setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+    }
 
     @Bean
     public Docket api() {
@@ -63,16 +73,18 @@ public class Application {
 
 //    @PostConstruct
     public void initDB(){
-
-       List<Sport> sports = Arrays.asList(
-                new Sport("Pool"),
-                new Sport("Ping Pong"),
-                new Sport("Fussball"),
-                new Sport("Darts"));
+        long count = repoSport.count();
+        
+        List<Sport> sports = Arrays.asList(
+                 new Sport("Pool"),
+                 new Sport("Ping Pong"),
+                 new Sport("Fussball"),
+                 new Sport("Darts"));
 
         for(Sport sport : sports){
             repoSport.save(sport);
         }
+        
         List<User> users = Arrays.asList(
                 new User("AAAAA"),
                 new User("BBBBB"),
@@ -112,6 +124,5 @@ public class Application {
                 }
             }
         }
-
     }
 }
