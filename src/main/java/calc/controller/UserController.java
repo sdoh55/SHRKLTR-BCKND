@@ -12,6 +12,7 @@ import calc.DTO.StatsDTO;
 import calc.entity.Game;
 import calc.entity.User;
 import calc.entity.Stats;
+import calc.security.Secured;
 import calc.service.GameService;
 import calc.service.UserService;
 import calc.service.StatsService;
@@ -32,6 +33,7 @@ public class UserController {
     private GameService matchService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
+    @Secured
     public List<UserDTO> users() {
 
         return userService.findAll().stream()

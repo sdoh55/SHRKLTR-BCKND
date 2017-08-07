@@ -22,7 +22,17 @@
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>${modelmapper.version}</version>
-        </dependency>       
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${java-jwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
         
         <!-- Datasource dependencies -->
         <dependency>
@@ -71,6 +81,8 @@
         <modelmapper.version>0.7.4</modelmapper.version>
         <hikaricp.version>2.6.3</hikaricp.version>
         <mysql.connector.version>5.1.43</mysql.connector.version>
+        <java-jwt.version>3.2.0</java-jwt.version>
+        <logback.versions>1.2.3</logback.versions>
     </properties>
 
     <build>
