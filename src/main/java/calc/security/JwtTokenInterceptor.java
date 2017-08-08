@@ -54,7 +54,7 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
             
             if (authHeader != null && authHeader.startsWith("Bearer")) {
                 String token = authHeader.substring(7);
-                logger.debug("Authorization Bearer token: {}", token);
+                logger.trace("Authorization Bearer token: {}", token);
                 
                 try {
                     DecodedJWT jwt = jwtVerifier.verify(token);
@@ -63,7 +63,7 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
                     Claim name = jwt.getClaim("name");
                     Claim email = jwt.getClaim("email");
                     
-                    logger.debug("JWToken verified for uid: {}", uid.asString());
+                    logger.debug("JWToken verified for uid: {}", uid.asLong());
                     
                     // add the FacebookUserInfoDTO as a request attribute for easy access
                     request.setAttribute("user_info", new FacebookUserInfoDTO(uid.asLong(), name.asString(), email.asString()));
