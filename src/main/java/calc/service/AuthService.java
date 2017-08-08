@@ -85,7 +85,15 @@ public class AuthService {
         // check if user exists and create a new user if needed
         User user = userService.findByUserName(String.valueOf(userInfo.getId()));
         if (user == null) {
-            userService.save(new User(String.valueOf(userInfo.getId()), userInfo.getEmail()));
+            user = new User(String.valueOf(userInfo.getId()), userInfo.getEmail());
+            int indexOfLastSpace = userInfo.getName().lastIndexOf(" ");
+            if (indexOfLastSpace > 0) {
+                user.setLastName(userInfo.getName().substring(indexOfLastSpace + 1));
+                user.setFirstName(userInfo.getName().substring(0, indexOfLastSpace));
+            } else {
+                user.setFirstName(userInfo.getName());
+            }
+            userService.save(user);
         }
         
         Date now = new Date();

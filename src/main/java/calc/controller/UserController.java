@@ -1,5 +1,6 @@
 package calc.controller;
 
+import calc.DTO.FacebookUserInfoDTO;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,11 +13,14 @@ import calc.DTO.StatsDTO;
 import calc.entity.Game;
 import calc.entity.User;
 import calc.entity.Stats;
+import calc.repository.UserRepository;
 import calc.security.Secured;
 import calc.service.GameService;
 import calc.service.UserService;
 import calc.service.StatsService;
 import calc.service.TournamentService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +36,9 @@ public class UserController {
     private StatsService statsService;
     @Autowired
     private GameService matchService;
+    
+    @Resource
+    private HttpServletRequest request;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public List<UserDTO> users() {
@@ -46,6 +53,12 @@ public class UserController {
         return userService.convertToDto(p);
     }
 
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public UserDTO getCurrentUser() {
+        FacebookUserInfoDTO userInfo = (FacebookUserInfoDTO)request.getAttribute("user_info");
+        return userService.convertToDto(userService.findByUserName(String.valueOf(userInfo.getId())));
+    }
+    
     //TODO probably need to send a bad request or something
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public UserDTO createUser(@RequestBody UserDTO user) {

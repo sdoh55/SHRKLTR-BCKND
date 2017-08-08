@@ -33,6 +33,7 @@ public class UserService{
     private OutcomeService outcomeService;
     @Autowired
     private ModelMapper modelMapper;
+    
 /*
     private List<User> userFromTournament(Tournament tournament){
 

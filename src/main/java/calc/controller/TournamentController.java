@@ -46,6 +46,7 @@ public class TournamentController {
 
     /**
      * Let the owner of a Tournament to delete it.
+     * @param name 
      */
     @RequestMapping(value = "/tournament/{tournamentName}", method = RequestMethod.DELETE)
     @Description("Let the owner of a Tournament to delete it.")

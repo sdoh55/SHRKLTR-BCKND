@@ -26,6 +26,11 @@ public class AuthController {
     @Autowired
     private AuthService authService;
     
+    /**
+     * API endpoint to exchange Facebook access tokens for a JWToken
+     * @param tokenRequest a JSON object containing the Facebook access token in the 'fb_access_token' field
+     * @return JWToken that can be used to access secured APIs
+     */
     @RequestMapping(value = "/auth/token", method = RequestMethod.POST)
     public TokenDTO getToken(@RequestBody TokenRequestDTO tokenRequest) {
         return authService.getToken(tokenRequest);

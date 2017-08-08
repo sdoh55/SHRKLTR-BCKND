@@ -22,6 +22,13 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
+ * HandlerInterceptor responsible for verifying the JWTokens for secured API endpoints.
+ * 
+ * <p>Use the {@link Secured} annotation at the class level or method level in the controllers
+ * that contain the API endpoints that should be secured.</p>
+ * 
+ * <p>The JWToken should be included in the 'Authorization' header using the 'Bearer' type.
+ * <li>i.e. {@literal Authorization: Bearer <JW Token>}</li></p>
  *
  * @author danny
  */
