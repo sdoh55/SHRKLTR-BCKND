@@ -44,7 +44,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
     "calc.rest", 
     "calc.service", 
     "calc.property",
-    "calc.security"
+    "calc.security",
+    "calc.exception"
 })
 @EnableJpaRepositories(basePackages = {"calc.repository"})
 @EnableSwagger2

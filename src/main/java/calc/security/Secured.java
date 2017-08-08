@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * @author danny
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
+@Target({ElementType.TYPE, ElementType.METHOD})
 public @interface Secured {
     String value() default "USER";
 }

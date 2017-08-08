@@ -38,6 +38,12 @@ public class User {
         this.stats = new ArrayList<Stats>();
     }
 
+    public User(String userName, String email) {
+        this.userName = userName;
+        this.email = email;
+        this.stats = new ArrayList<Stats>();
+    }
+
     @Override
     public String toString() {
         return String.format(

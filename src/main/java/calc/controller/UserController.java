@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Secured
 public class UserController {
 
     @Autowired
@@ -33,7 +34,6 @@ public class UserController {
     private GameService matchService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    @Secured
     public List<UserDTO> users() {
 
         return userService.findAll().stream()

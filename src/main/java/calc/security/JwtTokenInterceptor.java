@@ -1,8 +1,13 @@
 package calc.security;
 
+import calc.DTO.FacebookUserInfoDTO;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oracle.jrockit.jfr.ContentType;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -34,8 +40,8 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod)handler;
         Method method = handlerMethod.getMethod();
         
-        // check if the method should be secured
-        if (method.isAnnotationPresent(Secured.class)) {
+        // check if the class or method has the @Secured annotation
+        if (method.getDeclaringClass().isAnnotationPresent(Secured.class) || method.isAnnotationPresent(Secured.class)) {
             logger.debug("@Secured method for URI: {}", request.getRequestURI());
             String authHeader = request.getHeader("Authorization");
             
@@ -45,17 +51,22 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
                 
                 try {
                     DecodedJWT jwt = jwtVerifier.verify(token);
-                    logger.debug("JWToken verified");
+                    
+                    Claim uid = jwt.getClaim("uid");
+                    Claim name = jwt.getClaim("name");
+                    Claim email = jwt.getClaim("email");
+                    
+                    logger.debug("JWToken verified for uid: {}", uid.asString());
+                    
+                    // add the FacebookUserInfoDTO as a request attribute for easy access
+                    request.setAttribute("user_info", new FacebookUserInfoDTO(uid.asLong(), name.asString(), email.asString()));
                 } catch (JWTVerificationException ve) {
                     logger.warn("JWToken verification failed: {}", ve.getMessage());
-                    
-                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                    response.getWriter().write(ve.getMessage());
+                    setJSONErrorResponse(response, HttpStatus.UNAUTHORIZED, ve.getMessage());
                     return false;
                 }
             } else {
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                response.getWriter().write("Invalid 'Authorization' header");
+                setJSONErrorResponse(response, HttpStatus.UNAUTHORIZED, "Invalid 'Authorization' header");
                 return false;
             }
         }
@@ -73,4 +84,11 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
         
     }
     
+    private void setJSONErrorResponse(HttpServletResponse response, HttpStatus status, String errorMessage) throws IOException {
+        response.setStatus(status.value());
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.getWriter().append("{\"error_message\":\"");
+        response.getWriter().append(errorMessage);
+        response.getWriter().append("\"}");
+    }
 }
